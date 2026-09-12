@@ -44,3 +44,7 @@ desktop.ini
 *.temp
 *.bak
 *.cache
+
+# Agent caches & symlinks
+.claude/
+agent/
