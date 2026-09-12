@@ -1,0 +1,99 @@
+{
+  "knowledge_base": {
+    "GREETING": {
+      "response": "👋 Salam! I'm PMNA Assistant — your hyperlocal deal-finder for Perinthalmanna and Angadipuram.\n\nI can help you with:\n🛍️ Deals & offers from local shops\n🍛 Food spots and restaurant combos\n👟 Footwear, fashion, and gadget deals\n🏪 Store info, timings, and contact\n📋 Merchant registration and platform guide\n\nWhat are you looking for today?"
+    },
+    "HELP": {
+      "response": "Here's what I can help you with on PMNA Perks:\n\n🔍 **Find Deals**: Ask for offers in Bakery, Restaurants, Fashion, Footwear, Electronics, Jewellery.\n🏪 **Store Info**: Ask about any shop's address, timings, or contact.\n📍 **Locations**: Filter deals by Perinthalmanna or Angadipuram.\n💰 **Price Filters**: Ask for deals under ₹300, ₹500, or ₹1000.\n🛒 **Merchant Guide**: Ask how to register your shop or create promotions.\n\nTry: \"Show me biriyani offers\" or \"Best deals under ₹500\""
+    },
+    "PLATFORM_INFO": {
+      "response": "**PMNA Perks** is a hyperlocal commerce and offer discovery platform serving **Perinthalmanna** and **Angadipuram** in Kerala.\n\n🌟 **For Customers (Free)**:\n• Discover verified deals from local shops\n• Browse offers by category, price, and location\n• Chat with AI Assistant to find the best deals\n• View shop timings, addresses, and contact info\n\n🏪 **For Merchants**:\n• Register your store and create promotions\n• Upload offer photos using our Multer image uploader\n• Boost visibility with Showcase Ads\n• Manage all offers from the Merchant Portal\n\n📍 Active in: Perinthalmanna & Angadipuram\n🏷️ Categories: Food, Bakery, Fashion, Footwear, Electronics, Jewellery, Grocery, and more!"
+    },
+    "MERCHANT_GUIDE": {
+      "response": "**How to Register & Sell on PMNA Perks** 🏪\n\n**Step 1: Register Your Business**\n• Go to `/business/register`\n• Fill in: Business Name, Owner Name, Category, Location, Phone, Address\n• Submit for admin review (approved within 24 hours)\n\n**Step 2: Create Your First Offer**\n• Go to Merchant Portal → Create Offer\n• Fill in Promotion Title, Description, Category, Deal Type, Price\n• 📸 **Upload Your Photo**: Drag-and-drop or click \"Browse Device\" to upload from your phone/laptop (PNG, JPG, WEBP, max 5MB). Photos are auto-uploaded via Multer to our servers.\n• Set Start & End Dates, Terms & Conditions\n• Click **Publish Promotion**\n\n**Step 3: Boost with Showcase Ads**\n• Go to Showcase & Ads section\n• Pay via UPI (Google Pay, PhonePe, Paytm) or Credit/Debit Card\n• Your promotional banner appears on the PMNA home screen to thousands of local customers!\n\n✅ All merchants go through admin verification to ensure platform authenticity."
+    },
+    "SHOWCASE_ADS": {
+      "response": "**PMNA Showcase Advertising** 📣\n\nThe Showcase is PMNA's **premium promotional banner spot** that displays your store's ad to all customers browsing the platform home screen.\n\n💡 **What you get:**\n• Large promotional banner on the PMNA home feed\n• Your offer title, description, discount badge, and photo\n• One-click link to your store page\n• Targeted to local customers in Perinthalmanna & Angadipuram\n\n💳 **How to Pay:**\n• Go to Merchant Portal → Showcase & Ads\n• Choose payment method: **UPI QR** (scan with GPay/PhonePe/Paytm) or **Card/Netbanking** (3D secure gateway)\n• Complete payment and your showcase activates instantly!\n\n📸 **Uploading Your Banner:**\n• Upload directly from your device using our Multer image uploader\n• Or paste an image URL\n• Recommended size: 1200×600px"
+    },
+    "OFFERS_SEARCH": {
+      "response": "Here are the active deals on PMNA Perks right now:\n\n🍛 **Food & Restaurants**\n• Kerala Beef Fry + 2 Porotta Combo — ₹150 at Kozhikode Star Biriyani\n• Authentic Malabar Chicken Dum Biriyani — ₹180 at Kozhikode Star Biriyani\n• Family Feast (4 Biriyani + Sulaimani + Halwa) — ₹799 (27% OFF)\n\n🎂 **Bakery & Cafe**\n• Dutch Truffle Chocolate Pastry Box (Set of 4) — ₹270 (25% OFF)\n• Birthday & Celebration Cake Privilege Pass — ₹680 (20% OFF)\n\n👟 **Footwear**\n• Men's Casual Running Sneakers — ₹599 (40% OFF) at WalkZone\n• Ladies Party Wear Heel Sandals — ₹649 (28% OFF) at WalkZone\n• Stock Liquidation — 55% OFF at WalkZone Angadipuram!\n\n👗 **Fashion**\n• Festival Kanchipuram Silk Wedding Saree — ₹1999 (33% OFF)\n• Annual Stock Clearance Cotton Wear — ₹399 (60% OFF)\n\n📱 **Electronics**\n• 20W PD Fast Type-C Charger — ₹399 (50% OFF) at Mobile Hub\n\nAsk me to filter by category, price, or location!"
+    },
+    "FOOD_INQUIRY": {
+      "response": "🍛 **Food & Restaurant Deals on PMNA**\n\n**🏆 Kozhikode Star Biriyani — Perinthalmanna**\n✅ Verified | Open: 11:00 AM – 10:30 PM\n• Authentic Malabar Chicken Dum Biriyani — ₹180 (20% OFF)\n• Kerala Beef Fry (Kuttanad Style) + 2 Porotta Combo — ₹150 (25% OFF)\n• Monthly Family Dining Feast (4 Biriyani + 4 Sulaimani + Halwa) — ₹799 (27% OFF)\n\n**🎂 Top In Town Bakery & Cafe — Perinthalmanna**\n✅ Verified | Open: 8:00 AM – 9:30 PM\n• Dutch Truffle Chocolate Pastry Box (Set of 4) — ₹270 (25% OFF)\n• Birthday & Celebration Cake Privilege Pass (Monthly) — ₹680 (20% OFF)\n\n**🍰 aswathy bakes — Perinthalmanna**\n• Fresh custom cakes & baked goods\n• (Check latest offers for current deals)\n\n👉 Visit `/deals` or ask \"biriyani offers\" or \"birthday cake deal\" for more details!"
+    },
+    "FOOTWEAR_INQUIRY": {
+      "response": "👟 **Footwear Deals on PMNA**\n\n**🏆 WalkZone Footwear — Angadipuram** ✅ Verified\nOpen: 9:30 AM – 9:00 PM\n\n• **Men's Casual Running Sneakers** — ₹599 (was ₹999, **40% OFF**)\n• **Ladies Party Wear Heel Sandals** — ₹649 (was ₹899, **28% OFF**)\n• **⚡ Stock Liquidation: End-of-Stock Clearance** — ₹674 (was ₹1499, **55% OFF**!) — Hurry, limited stock!\n\nAll WalkZone deals are in **Angadipuram**.\nAsk me for specific sizes or styles if needed!"
+    },
+    "FASHION_INQUIRY": {
+      "response": "👗 **Fashion & Textiles Deals on PMNA**\n\n**🏆 Modern Textiles & Sarees — Perinthalmanna** ✅ Verified\nOpen: 9:00 AM – 8:30 PM\n\n• **Festival Kanchipuram Soft Silk Wedding Saree** — ₹1999 (was ₹2999, **33% OFF**)\n• **⚡ Annual Stock Liquidation — Cotton Gents & Ladies Wear** — ₹399 (was ₹999, **60% OFF**!) — Clearance sale!\n\nAll fashion deals are in **Perinthalmanna**.\nAsk me for specific styles (cotton, silk, saree, gents wear, ladies wear)!"
+    },
+    "ELECTRONICS_INQUIRY": {
+      "response": "📱 **Electronics & Mobile Accessories on PMNA**\n\n**🏆 Mobile Hub & Gadgets — Angadipuram** ✅ Verified\nOpen: 10:00 AM – 9:00 PM\n\n• **20W PD Fast Type-C Charger with Braided Cable** — ₹399 (was ₹799, **50% OFF**)\n  Premium fast charging, braided cable, PD 20W — great deal!\n\n💡 Flash deal — ends today! Don't miss it.\nLocation: Angadipuram"
+    },
+    "JEWELLERY_INQUIRY": {
+      "response": "💍 **Jewellery on PMNA**\n\n**🏆 Malabar Gold & Diamonds — Perinthalmanna** ✅ Verified\nOpen: 9:30 AM – 9:00 PM\n\nMalabar Gold is one of India's most trusted jewellery brands. Check their PMNA profile for current gold jewellery offers, diamond deals, and festival collections.\n\n📍 Location: Perinthalmanna\nVisit the platform for their latest offers!"
+    },
+    "STORE_INQUIRY": {
+      "response": "🏪 **Verified Shops on PMNA Perks**\n\n**Perinthalmanna:**\n1. 🍛 Kozhikode Star Biriyani — Open 11:00 AM – 10:30 PM\n2. 🎂 Top In Town Bakery & Cafe — Open 8:00 AM – 9:30 PM\n3. 👗 Modern Textiles & Sarees — Open 9:00 AM – 8:30 PM\n4. 💍 Malabar Gold & Diamonds — Open 9:30 AM – 9:00 PM\n5. 🍰 aswathy bakes — Baker's fresh items\n\n**Angadipuram:**\n1. 👟 WalkZone Footwear — Open 9:30 AM – 9:00 PM\n2. 📱 Mobile Hub & Gadgets — Open 10:00 AM – 9:00 PM\n\nAsk about a specific shop for its contact number, address, or latest offers!"
+    }
+  },
+  "intents": [
+    "ELECTRONICS_INQUIRY",
+    "FASHION_INQUIRY",
+    "FOOD_INQUIRY",
+    "FOOTWEAR_INQUIRY",
+    "GREETING",
+    "HELP",
+    "JEWELLERY_INQUIRY",
+    "MERCHANT_GUIDE",
+    "OFFERS_SEARCH",
+    "PLATFORM_INFO",
+    "SHOWCASE_ADS",
+    "STORE_INQUIRY"
+  ],
+  "version": "2.0",
+  "coverage": {
+    "locations": [
+      "Perinthalmanna",
+      "Angadipuram"
+    ],
+    "categories": [
+      "Bakery",
+      "Cafes",
+      "Restaurants",
+      "Footwear",
+      "Fashion",
+      "Mobile",
+      "Electronics",
+      "Jewellery",
+      "Grocery",
+      "Beauty",
+      "Salon",
+      "Furniture",
+      "Pharmacy"
+    ],
+    "shops": [
+      "Kozhikode Star Biriyani",
+      "Top In Town Bakery & Cafe",
+      "WalkZone Footwear",
+      "Modern Textiles & Sarees",
+      "Mobile Hub & Gadgets",
+      "Malabar Gold & Diamonds",
+      "aswathy bakes"
+    ],
+    "products": [
+      "Authentic Malabar Chicken Dum Biriyani",
+      "Kerala Beef Fry + 2 Porotta Combo",
+      "Family Dining Feast (4 Biriyani + 4 Sulaimani + Halwa)",
+      "Dutch Truffle Chocolate Pastry Box (Set of 4)",
+      "Birthday & Celebration Cake Privilege Pass",
+      "WalkZone Men's Casual Running Sneakers",
+      "Ladies Party Wear Heel Sandals",
+      "Stock Liquidation: Footwear 55% OFF",
+      "Festival Kanchipuram Soft Silk Wedding Saree",
+      "Annual Stock Liquidation Cotton Wear 60% OFF",
+      "20W PD Fast Type-C Charger with Braided Cable",
+      "Malabar Gold & Diamonds Jewellery"
+    ]
+  }
+}

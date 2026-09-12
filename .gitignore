@@ -48,3 +48,17 @@ desktop.ini
 # Agent caches & symlinks
 .claude/
 agent/
+
+# Dependencies & build outputs
+node_modules/
+dist/
+.env
+*.local
+
+# Uploaded media files (served locally, not in repo)
+server/uploads/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

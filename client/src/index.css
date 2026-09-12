@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#F8FAFC] text-[#0F172A] font-sans antialiased;
+  }
+  
+  h1 {
+    @apply text-[#0F172A] font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-[#0F172A] font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-[#0F172A] font-semibold;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F8FAFC] text-[#334155] border border-[#D1D5DB] font-medium text-sm px-4 py-2.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 bg-transparent hover:bg-[#ECFDF5] text-[#059669] border border-[#10B981] font-semibold text-sm px-4 py-2.5 rounded-lg transition-all;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 bg-[#EF4444] hover:bg-[#DC2626] text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-all shadow-sm;
+  }
+
+  /* Cards */
+  .card {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    padding: 1.25rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .card-elevated {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    padding: 1.5rem;
+  }
+
+  /* Form Inputs */
+  .form-input {
+    @apply w-full h-[42px] bg-white border border-[#E2E8F0] rounded-lg px-3.5 text-sm text-[#0F172A] placeholder-[#94A3B8] transition-all;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px #D1FAE5;
+  }
+
+  /* Status Badges */
+  .badge-pending {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FEF3C7] text-[#B45309];
+  }
+
+  .badge-confirmed, .badge-active {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#D1FAE5] text-[#047857];
+  }
+
+  .badge-completed, .badge-info {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#0369A1];
+  }
+
+  .badge-cancelled, .badge-danger {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FEE2E2] text-[#B91C1C];
+  }
+
+  .badge-draft {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#F1F5F9] text-[#475569];
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom animations */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.02); }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s ease-in-out infinite;
+}

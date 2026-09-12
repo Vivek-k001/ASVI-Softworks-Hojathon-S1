@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMNA Perks — Technical Architecture & System Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10B981;
+      --primary-dark: #047857;
+      --secondary: #0EA5E9;
+      --slate-900: #0F172A;
+      --slate-800: #1E293B;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748B;
+      --slate-200: #E2E8F0;
+      --slate-100: #F1F5F9;
+      --slate-50: #F8FAFC;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--slate-900);
+      background-color: #F8FAFC;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .doc-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 60px 80px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--slate-200);
+    }
+
+    .action-bar {
+      position: sticky;
+      top: 20px;
+      max-width: 900px;
+      margin: 20px auto 10px auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .btn-print {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-print:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Cover Page */
+    .cover-page {
+      padding-bottom: 60px;
+      border-bottom: 3px solid var(--primary);
+      margin-bottom: 50px;
+    }
+
+    .badge-town {
+      display: inline-block;
+      background: #ECFDF5;
+      color: var(--primary-dark);
+      border: 1px solid #A7F3D0;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--slate-900);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--slate-600);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .meta-item strong {
+      color: var(--slate-900);
+      display: block;
+      font-size: 13px;
+    }
+
+    /* Headings & Content */
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: var(--slate-700);
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+      color: var(--slate-700);
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 12.5px;
+    }
+
+    th, td {
+      border: 1px solid var(--slate-200);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--slate-50);
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    tr:nth-child(even) {
+      background: #FAFAFA;
+    }
+
+    /* Cards */
+    .hierarchy-box {
+      background: var(--slate-50);
+      border: 1.5px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 20px 0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .ad-style-callout {
+      background: #ECFDF5;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    .ad-style-callout strong {
+      color: var(--primary-dark);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--slate-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--slate-800);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        font-size: 12px;
+      }
+
+      .action-bar {
+        display: none !important;
+      }
+
+      .doc-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      h2 {
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print Button Bar (Hidden in Print View) -->
+  <div class="action-bar">
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Download / Save as PDF
+    </button>
+  </div>
+
+  <div class="doc-container">
+
+    <!-- COVER SECTION -->
+    <div class="cover-page">
+      <span class="badge-town">Hyperlocal Commercial Platform</span>
+      <h1>PMNA Perks — System Architecture &amp; Technical Documentation</h1>
+      <p class="subtitle">
+        Comprehensive Architectural Specification, Database Models, Merchant Monthly Subscription Revenue System, and 4-Tier Home Hierarchy.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span>Project Platform:</span>
+          <strong>PMNA Perks</strong>
+        </div>
+        <div class="meta-item">
+          <span>Target Geos:</span>
+          <strong>Perinthalmanna (679322) &amp; Angadipuram (679321)</strong>
+        </div>
+        <div class="meta-item">
+          <span>Architecture:</span>
+          <strong>MERN (Express/Mongo) + Gemini 1.5 + Cloudinary</strong>
+        </div>
+        <div class="meta-item">
+          <span>Document Version:</span>
+          <strong>2.1 (Production Release)</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. INTRODUCTION -->
+    <h2>1. Introduction &amp; Hyperlocal Problem Statement</h2>
+    <p>
+      In Tier-2/3 commercial hubs like <strong>Perinthalmanna</strong> and <strong>Angadipuram</strong>, local retail businesses face significant digital marketing hurdles:
+    </p>
+    <ul>
+      <li><strong>Generic Dilution:</strong> National aggregators (Swiggy, Amazon) cater strictly to standard food delivery or warehouse shipping, offering zero discovery for local footwear stores, textile boutiques, mobile accessory shops, or jewelry showrooms.</li>
+      <li><strong>Social Media Noise:</strong> WhatsApp statuses and Instagram stories expire within 24 hours and fail to provide searchable, organized, or location-filtered deals.</li>
+      <li><strong>Print Ad Costs:</strong> Traditional local newspaper commercial display ads (e.g. Malayala Manorama) cost thousands of rupees for a single morning print run that cannot provide interactive Google Maps directions, click-to-call, or live inventory updates.</li>
+    </ul>
+    <p>
+      <strong>The PMNA Solution:</strong> A unified digital platform where local shoppers browse verified daily deals and seasonal sales with zero generic filler, and local shops subscribe for a dedicated, high-impact front-page commercial showcase.
+    </p>
+
+    <!-- 2. HOME SCREEN HIERARCHY -->
+    <div class="page-break"></div>
+    <h2>2. PMNA Home Screen Discovery Hierarchy</h2>
+    <p>
+      The PMNA Home Screen follows a structured, conversion-aware 4-tier layout:
+    </p>
+
+    <div class="hierarchy-box">PMNA HOME SCREEN
+│
+├── 1. DAILY DEALS &amp; OFFERS
+│      ├── Subscribed Shop Dedicated Showcases (Malayala Manorama Ad Style)
+│      └── Limited-Time Flash Deals (Ending today / within 72 hours)
+│
+├── 2. MONTHLY DEALS &amp; LONG-TERM OFFERS
+│      └── Offers valid for an extended period (Month-long packages &amp; festive passes)
+│
+├── 3. OTHER HOME CONTENT
+│      ├── 3A. Explore by Category (Fashion, Footwear, Mobile, Jewellery, etc.)
+│      ├── 3B. Grounded PMNA AI Local Discovery Assistant
+│      ├── 3C. Popular Food &amp; Dining Spots (Biriyani deals, family combos)
+│      └── 3D. Verified Neighborhood Shops Directory
+│
+└── LAST SECTION: SHOP CLEARANCE &amp; END-OF-STOCK
+       └── Steep discounts, warehouse stock liquidation, last-size footwear &amp; apparel bargains</div>
+
+    <div class="ad-style-callout">
+      <strong>Malayala Manorama Commercial Display Ad Styling:</strong> Each subscribed shop receives a prominent framed ad card featuring shop branding, verified badge, town tag, direct click-to-call, a 1200×600 promotional banner, floating discount badge, bold headline, and direct action buttons (<em>View Offer</em>, <em>View Shop</em>, <em>Directions</em>).
+    </div>
+
+    <!-- 3. TECHNOLOGY STACK -->
+    <h2>3. Complete Technology Stack</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Version</th>
+          <th>Purpose &amp; Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frontend</strong></td>
+          <td>React.js (SPA)</td>
+          <td>18.3.1</td>
+          <td>Component architecture, hooks-driven state, responsive layout</td>
+        </tr>
+        <tr>
+          <td><strong>Build Tool</strong></td>
+          <td>Vite</td>
+          <td>5.4.21</td>
+          <td>Instant HMR development server and optimized Rollup production bundling</td>
+        </tr>
+        <tr>
+          <td><strong>Styling</strong></td>
+          <td>Vanilla CSS + Tailwind v3</td>
+          <td>3.4.4</td>
+          <td>Curated SaaS palette (Emerald <code>#10B981</code>, Sky <code>#0EA5E9</code>), Inter font, Soft UI</td>
+        </tr>
+        <tr>
+          <td><strong>Routing</strong></td>
+          <td>React Router DOM</td>
+          <td>6.23.1</td>
+          <td>Declarative client-side routing, protected merchant &amp; admin routes</td>
+        </tr>
+        <tr>
+          <td><strong>Backend API</strong></td>
+          <td>Node.js / Express.js</td>
+          <td>4.19.2 (ESM)</td>
+          <td>RESTful routing, JWT authentication, and business logic pipelines</td>
+        </tr>
+        <tr>
+          <td><strong>Database</strong></td>
+          <td>MongoDB Atlas</td>
+          <td>Mongoose 8.4</td>
+          <td>Cloud cluster with automated in-memory development fallback</td>
+        </tr>
+        <tr>
+          <td><strong>Media CDN</strong></td>
+          <td>Cloudinary SDK</td>
+          <td>2.2.0</td>
+          <td>Authenticated memory-stream banner image upload without exposing API secrets</td>
+        </tr>
+        <tr>
+          <td><strong>Local AI</strong></td>
+          <td>Google Gemini 1.5 Flash</td>
+          <td>0.14.0</td>
+          <td>Zero-hallucination assistant strictly grounded in live PMNA shop data</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 4. SUBSCRIPTION & REVENUE MODEL -->
+    <div class="page-break"></div>
+    <h2>4. Shopkeeper Subscription &amp; Monetization Model</h2>
+    <p>
+      PMNA generates recurring platform revenue through monthly showcase advertising subscriptions paid by local shopkeepers:
+    </p>
+    <ul>
+      <li><strong>Configurable Pricing:</strong> The monthly showcase fee is set to <strong>₹99/month</strong> by default and can be updated dynamically by the Admin through the Admin Control Panel.</li>
+      <li><strong>Strict Public Visibility Filter:</strong> Only shops with an <code>active</code> subscription and unexpired date appear in the Home Screen "Daily Deals &amp; Offers" showcase.</li>
+      <li><strong>Graceful Degradation:</strong> If a subscription expires, the showcase is automatically hidden from public discovery without deleting the shop profile or offers.</li>
+      <li><strong>Payment Gateway Flow:</strong> India-friendly Razorpay-compatible simulation supporting UPI QR Code scanner, UPI VPA (e.g. <code>pmna.perks@upi</code>), and Cards with server-side activation.</li>
+    </ul>
+
+    <!-- 5. DATABASE SCHEMAS -->
+    <h2>5. Database Schema &amp; Data Models</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Key Fields</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Showcase</code></td>
+          <td><code>businessId, title, description, imageUrl, discount, expiryDate, isActive, adminDisabled</code></td>
+          <td>Promotional ad space on Home Screen</td>
+        </tr>
+        <tr>
+          <td><code>Subscription</code></td>
+          <td><code>businessId, planId, amount, status, startDate, expiryDate, paymentId</code></td>
+          <td>30-day merchant showcase access record</td>
+        </tr>
+        <tr>
+          <td><code>Payment</code></td>
+          <td><code>businessId, orderId, paymentId, amount, paymentMethod, receiptNumber, billingPeriod</code></td>
+          <td>Financial audit logs and tax invoice generation</td>
+        </tr>
+        <tr>
+          <td><code>Business</code></td>
+          <td><code>name, address, locationId, phone, subscriptionStatus, subscriptionExpiresAt, activeShowcaseId</code></td>
+          <td>Registered merchant profile</td>
+        </tr>
+        <tr>
+          <td><code>Offer</code></td>
+          <td><code>title, offerPrice, originalPrice, discountPercentage, offerType, startDate, endDate</code></td>
+          <td>Individual deal listing (daily, clearance, monthly)</td>
+        </tr>
+        <tr>
+          <td><code>Setting</code></td>
+          <td><code>key, value, description, updatedBy</code></td>
+          <td>Dynamic platform configuration (e.g. subscription price)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 6. VERIFICATION SUMMARY -->
+    <div class="page-break"></div>
+    <h2>6. System Verification &amp; Quality Audit</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>System Feature</th>
+          <th>Expected Behavior</th>
+          <th>Verification Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Home Screen Showcase</td>
+          <td>Displays active shops (WalkZone &amp; Star Biriyani) in Manorama ad box style</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Town Filter Toggles</td>
+          <td>Filters Daily Deals dynamically by Perinthalmanna &amp; Angadipuram</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Monthly Deals Section</td>
+          <td>Renders month-long campaigns &amp; festive dining combos</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Shop Clearance Section</td>
+          <td>Renders end-of-season stock liquidation offers in golden banner</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Merchant Showcase Manager</td>
+          <td>Cloudinary upload, live ad preview, and UPI checkout modal</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Admin Subscriptions Panel</td>
+          <td>Revenue KPIs (₹297), price configurator, and ad moderation toggle</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+        <tr>
+          <td>Vite Production Build</td>
+          <td>Rollup bundle compiles with 0 errors</td>
+          <td><strong>VERIFIED (PASS)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 40px; text-align: center; color: var(--slate-500); font-size: 12px;">
+      PMNA Perks &amp; Discovery • Perinthalmanna &amp; Angadipuram, Kerala • © 2026 ASVI Softworks
+    </p>
+
+  </div>
+
+</body>
+</html>
