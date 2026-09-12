@@ -26,31 +26,24 @@ There's no required stack. Build your agent with any language, any framework, an
 
 ## Team Information
 
-Fill this in as soon as your team is formed.
-
-**Team ID:**
-
-**Team Name:**
+**Team Name:** ASVI Softworks
 
 **Team Members:**
 
-1. Name
-2. Name
-3. Name
+1. Vivek K
+2. Aswathi P
 
-**Project Name:**
-
-> Teams may have **1, 2, or 3 members**.
+**Project Name:** PmnaPerks
 
 ---
 
 ## Project Documentation
 
-Replace the placeholders below with your own project's details — this is what judges will actually read.
-
 ### Project Name
+PmnaPerks
 
 ### Team
+ASVI Softworks
 
 ### Problem Statement
 

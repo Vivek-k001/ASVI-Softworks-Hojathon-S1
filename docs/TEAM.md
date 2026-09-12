@@ -1,29 +1,25 @@
 # Team Information
 
-**Team ID:**
+**Team ID:** 
 
-**Team Name:**
+**Team Name:** ASVI Softworks
 
-**Project Name:**
+**Project Name:** PmnaPerks
 
 ---
 
 ## Members
 
-Teams can have **1, 2, or 3 members**. Member 2 and Member 3 are optional.
-
 ### Member 1
 
-**Name:**
+**Name:** Vivek K
 
 ### Member 2
 
-*(Optional)*
-
-**Name:**
+**Name:** Aswathi P
 
 ### Member 3
 
 *(Optional)*
 
-**Name:**
+**Name:** 
