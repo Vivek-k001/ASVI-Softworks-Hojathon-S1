@@ -330,47 +330,55 @@ Generate a concise, helpful 1-2 sentence response summarizing these exact matche
   };
 };
 
-// Keywords that ALWAYS mean greeting — skip ML entirely
-const GREETING_KEYWORDS = ['hi', 'hello', 'hey', 'hai', 'hii', 'helo', 'namaskaram', 'vanakkam', 'good morning', 'good evening', 'good afternoon', 'good night', 'sup', 'yo'];
+// Words/phrases that ALWAYS mean greeting — checked with includes() so misspellings and extra words still match
+const GREETING_TRIGGERS = [
+  // English
+  'hi', 'hello', 'hey', 'howdy', 'hiya', 'greetings', 'sup', 'yo', 'good morning',
+  'good evening', 'good afternoon', 'good night', 'good day', 'morning', 'evening',
+  // Malayalam / Manglish
+  'namaskaram', 'namaskar', 'vanakkam', 'hai', 'hii', 'helo', 'salam',
+  // Islamic greetings — include common misspellings
+  'assalamu alaikum', 'assalamu aialukm', 'assalamu alaykum', 'assalamu alaikm',
+  'assalam alaikum', 'asalam alaikum', 'aslam alaikum', 'assalamualaikum',
+  'walaikum assalam', 'wa alaikum assalam', 'waalaikum', 'salam alaikum',
+];
 
 // Keywords that ALWAYS mean help
 const HELP_KEYWORDS = ['help', 'what can you do', 'how can you help', 'what do you know', 'show me options'];
 
 // Per-intent confidence thresholds — conversational intents are obvious, need less confidence
 const INTENT_THRESHOLDS = {
-  GREETING:      0.20,   // "hi" is always greeting
+  GREETING:      0.20,
   HELP:          0.22,
   PLATFORM_INFO: 0.35,
   MERCHANT_GUIDE:0.35,
   SHOWCASE_ADS:  0.35,
 };
 
+const GREETING_RESPONSE = `👋 Salam! I'm PMNA Assistant — your hyperlocal deal-finder for Perinthalmanna and Angadipuram.\n\nI can help you with:\n🛍️ Deals & offers from local shops\n🍛 Food spots and restaurant combos\n👟 Footwear, fashion, and gadget deals\n🏪 Store info, timings, and contact\n📋 Merchant registration and platform guide\n\nWhat are you looking for today?`;
+
+const HELP_RESPONSE = `Here's what I can help you with on PMNA Perks:\n\n🔍 **Find Deals**: Ask for offers in Bakery, Restaurants, Fashion, Footwear, Electronics, Jewellery.\n🏪 **Store Info**: Ask about any shop's address, timings, or contact.\n📍 **Locations**: Filter deals by Perinthalmanna or Angadipuram.\n💰 **Price Filters**: Ask for deals under ₹300, ₹500, or ₹1000.\n🛒 **Merchant Guide**: Ask how to register your shop or create promotions.\n\nTry: "Show me biriyani offers" or "Best deals under ₹500"`;
+
+const makeGreeting = () => ({ message: GREETING_RESPONSE, results: [], params: { intent: 'GREETING', source: 'keyword_match' }, mlIntent: 'GREETING', mlConfidence: 1.0 });
+const makeHelp    = () => ({ message: HELP_RESPONSE,    results: [], params: { intent: 'HELP',     source: 'keyword_match' }, mlIntent: 'HELP',     mlConfidence: 1.0 });
+
 export const processChatMessage = async (userMessage) => {
   const msgLower = userMessage.toLowerCase().trim();
 
-  // ── Fast-path: keyword-based greeting detection (bypass ML entirely) ──
-  if (GREETING_KEYWORDS.some(kw => msgLower === kw || msgLower.startsWith(kw + ' ') || msgLower.endsWith(' ' + kw))) {
-    const greetingResponse = `👋 Salam! I'm PMNA Assistant — your hyperlocal deal-finder for Perinthalmanna and Angadipuram.\n\nI can help you with:\n🛍️ Deals & offers from local shops\n🍛 Food spots and restaurant combos\n👟 Footwear, fashion, and gadget deals\n🏪 Store info, timings, and contact\n📋 Merchant registration and platform guide\n\nWhat are you looking for today?`;
-    return {
-      message: greetingResponse,
-      results: [],
-      params: { intent: 'GREETING', source: 'keyword_match' },
-      mlIntent: 'GREETING',
-      mlConfidence: 1.0,
-    };
+  // ── Fast-path 1: Pure greeting trigger (includes() so typos still match) ──
+  if (GREETING_TRIGGERS.some(kw => msgLower.includes(kw))) return makeGreeting();
+
+  // ── Fast-path 2: Very short message with no search intent = treat as greeting ──
+  // e.g. "ok", "hmm", "thanks", single-word non-search inputs
+  const words = msgLower.split(/\s+/).filter(Boolean);
+  const searchWords = ['offer', 'deal', 'price', 'shop', 'food', 'find', 'show', 'biriyani',
+                       'saree', 'shoe', 'footwear', 'mobile', 'charger', 'register', 'how'];
+  if (words.length <= 2 && !searchWords.some(sw => msgLower.includes(sw))) {
+    return makeGreeting();
   }
 
-  // ── Fast-path: keyword-based help detection ──
-  if (HELP_KEYWORDS.some(kw => msgLower.includes(kw))) {
-    const helpResponse = `Here's what I can help you with on PMNA Perks:\n\n🔍 **Find Deals**: Ask for offers in Bakery, Restaurants, Fashion, Footwear, Electronics, Jewellery.\n🏪 **Store Info**: Ask about any shop's address, timings, or contact.\n📍 **Locations**: Filter deals by Perinthalmanna or Angadipuram.\n💰 **Price Filters**: Ask for deals under ₹300, ₹500, or ₹1000.\n🛒 **Merchant Guide**: Ask how to register your shop or create promotions.\n\nTry: "Show me biriyani offers" or "Best deals under ₹500"`;
-    return {
-      message: helpResponse,
-      results: [],
-      params: { intent: 'HELP', source: 'keyword_match' },
-      mlIntent: 'HELP',
-      mlConfidence: 1.0,
-    };
-  }
+  // ── Fast-path 3: Help keywords ──
+  if (HELP_KEYWORDS.some(kw => msgLower.includes(kw))) return makeHelp();
 
   // ── Stage 0: Python ML Intent Classification ──
   const mlResult = await queryPythonChatbot(userMessage);
