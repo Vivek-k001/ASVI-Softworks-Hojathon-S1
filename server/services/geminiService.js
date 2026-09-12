@@ -330,14 +330,57 @@ Generate a concise, helpful 1-2 sentence response summarizing these exact matche
   };
 };
 
+// Keywords that ALWAYS mean greeting — skip ML entirely
+const GREETING_KEYWORDS = ['hi', 'hello', 'hey', 'hai', 'hii', 'helo', 'namaskaram', 'vanakkam', 'good morning', 'good evening', 'good afternoon', 'good night', 'sup', 'yo'];
+
+// Keywords that ALWAYS mean help
+const HELP_KEYWORDS = ['help', 'what can you do', 'how can you help', 'what do you know', 'show me options'];
+
+// Per-intent confidence thresholds — conversational intents are obvious, need less confidence
+const INTENT_THRESHOLDS = {
+  GREETING:      0.20,   // "hi" is always greeting
+  HELP:          0.22,
+  PLATFORM_INFO: 0.35,
+  MERCHANT_GUIDE:0.35,
+  SHOWCASE_ADS:  0.35,
+};
+
 export const processChatMessage = async (userMessage) => {
-  // Stage 0: Python ML Intent Classification
+  const msgLower = userMessage.toLowerCase().trim();
+
+  // ── Fast-path: keyword-based greeting detection (bypass ML entirely) ──
+  if (GREETING_KEYWORDS.some(kw => msgLower === kw || msgLower.startsWith(kw + ' ') || msgLower.endsWith(' ' + kw))) {
+    const greetingResponse = `👋 Salam! I'm PMNA Assistant — your hyperlocal deal-finder for Perinthalmanna and Angadipuram.\n\nI can help you with:\n🛍️ Deals & offers from local shops\n🍛 Food spots and restaurant combos\n👟 Footwear, fashion, and gadget deals\n🏪 Store info, timings, and contact\n📋 Merchant registration and platform guide\n\nWhat are you looking for today?`;
+    return {
+      message: greetingResponse,
+      results: [],
+      params: { intent: 'GREETING', source: 'keyword_match' },
+      mlIntent: 'GREETING',
+      mlConfidence: 1.0,
+    };
+  }
+
+  // ── Fast-path: keyword-based help detection ──
+  if (HELP_KEYWORDS.some(kw => msgLower.includes(kw))) {
+    const helpResponse = `Here's what I can help you with on PMNA Perks:\n\n🔍 **Find Deals**: Ask for offers in Bakery, Restaurants, Fashion, Footwear, Electronics, Jewellery.\n🏪 **Store Info**: Ask about any shop's address, timings, or contact.\n📍 **Locations**: Filter deals by Perinthalmanna or Angadipuram.\n💰 **Price Filters**: Ask for deals under ₹300, ₹500, or ₹1000.\n🛒 **Merchant Guide**: Ask how to register your shop or create promotions.\n\nTry: "Show me biriyani offers" or "Best deals under ₹500"`;
+    return {
+      message: helpResponse,
+      results: [],
+      params: { intent: 'HELP', source: 'keyword_match' },
+      mlIntent: 'HELP',
+      mlConfidence: 1.0,
+    };
+  }
+
+  // ── Stage 0: Python ML Intent Classification ──
   const mlResult = await queryPythonChatbot(userMessage);
   console.log(`[ChatBot] ML Intent: ${mlResult.intent} (${(mlResult.confidence * 100).toFixed(0)}% confidence)`);
 
-  // Pure-platform intents: ML model is the authoritative source, no DB needed
+  // Check per-intent threshold for static (no-DB-needed) intents
   const staticIntents = ['GREETING', 'HELP', 'PLATFORM_INFO', 'MERCHANT_GUIDE', 'SHOWCASE_ADS'];
-  if (mlResult.intent && staticIntents.includes(mlResult.intent) && mlResult.confidence >= 0.40) {
+  const threshold = INTENT_THRESHOLDS[mlResult.intent] || 0.40;
+
+  if (mlResult.intent && staticIntents.includes(mlResult.intent) && mlResult.confidence >= threshold) {
     return {
       message: mlResult.response,
       results: [],
@@ -347,7 +390,7 @@ export const processChatMessage = async (userMessage) => {
     };
   }
 
-  // For product/offer queries, continue to Gemini + DB pipeline
+  // ── For product/offer queries, use Gemini + DB pipeline ──
   const [categories, locations] = await Promise.all([
     Category.find({ isActive: true }).select('name slug').lean(),
     Location.find({ isActive: true }).select('name slug').lean(),
@@ -363,15 +406,6 @@ export const processChatMessage = async (userMessage) => {
 
   // Stage 3: Grounded response generation
   const geminiResult = await generateGroundedResponse(userMessage, params, dbResults);
-
-  // If DB has results and ML had a related response, prepend ML knowledge as context
-  if (mlResult.response && mlResult.confidence >= 0.35 && needsGeminiAugmentation(mlResult)) {
-    return {
-      ...geminiResult,
-      mlIntent: mlResult.intent,
-      mlConfidence: mlResult.confidence,
-    };
-  }
 
   return {
     ...geminiResult,

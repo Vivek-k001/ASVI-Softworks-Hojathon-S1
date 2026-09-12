@@ -46,19 +46,47 @@ KB_PATH = OUTPUT_DIR / "pmna_knowledge_base.json"
 TRAINING_DATA = [
 
     # -------------------------------------------------------------------------
-    #  GREETING
+    #  GREETING — lots of samples so single-word "hi" is high confidence
     # -------------------------------------------------------------------------
     ("GREETING", "hi"),
+    ("GREETING", "hi!"),
     ("GREETING", "hello"),
+    ("GREETING", "hello!"),
     ("GREETING", "hey"),
+    ("GREETING", "hey!"),
     ("GREETING", "good morning"),
     ("GREETING", "good evening"),
+    ("GREETING", "good afternoon"),
+    ("GREETING", "good night"),
     ("GREETING", "hi there"),
     ("GREETING", "namaskaram"),
     ("GREETING", "hii pmna"),
     ("GREETING", "hello assistant"),
     ("GREETING", "vanakkam"),
     ("GREETING", "hai"),
+    ("GREETING", "hii"),
+    ("GREETING", "helo"),
+    ("GREETING", "sup"),
+    ("GREETING", "yo"),
+    ("GREETING", "hiya"),
+    ("GREETING", "howdy"),
+    ("GREETING", "hi pmna"),
+    ("GREETING", "hello pmna"),
+    ("GREETING", "hey pmna"),
+    ("GREETING", "hi assistant"),
+    ("GREETING", "greetings"),
+    ("GREETING", "salam"),
+    ("GREETING", "assalamu alaikum"),
+    ("GREETING", "good day"),
+    ("GREETING", "morning"),
+    ("GREETING", "evening"),
+    ("GREETING", "hi bot"),
+    ("GREETING", "hello bot"),
+    ("GREETING", "hey bot"),
+    ("GREETING", "start"),
+    ("GREETING", "begin"),
+    ("GREETING", "hai pmna"),
+    ("GREETING", "hii assistant"),
 
     # -------------------------------------------------------------------------
     #  HELP / WHAT CAN YOU DO
